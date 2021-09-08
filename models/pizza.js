@@ -11,7 +11,7 @@ const PizzaSchema = new Schema ({
 
     estado:{
         type: Boolean,
-        require:[true, "El estado es obligatorio"],
+        default: true
         
     },
 
@@ -29,9 +29,17 @@ const PizzaSchema = new Schema ({
 
     categoria:{
         type: String,
-        require:[true, "Categoria es obligatorio"]
+        require:[true, "Categoria es obligatorio"],
+        enum: ["Normal", "Light"]
 
-    }
+    },
+
+    img:{
+
+        type:String
+    },
+
+
 
     
 })

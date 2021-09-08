@@ -1,5 +1,5 @@
 const {request, response} = require ('express');
-const Usuario = require('../models/pizza')
+const Pizza = require('../models/pizza')
 
 
 //GET
@@ -15,13 +15,13 @@ const pizzasGet =(req = request, res= response) =>{
 //POST
 const pizzasPost = async (req = request, res= response) =>{
 
-    const {nombre, estado, precio, detalle,categoria} =req.body;
-    const pizza = new Pizza({nombre, estado, precio,detalle, categoria})
+    const {nombre, precio, detalle,categoria, img} =req.body;
+    const pizza = new Pizza({nombre, precio,detalle, categoria, img})
     await pizza.save()
 
         
     res.json({
-        msg: "pizza creado",
+        msg: "pizza creada",
         pizza
         
     });
@@ -30,10 +30,19 @@ const pizzasPost = async (req = request, res= response) =>{
 
   
 //PUT
-const pizzasPut =(req = request, res= response) =>{
+const pizzasPut = async (req = request, res= response) =>{
+
+    const id = req.params.id;
+    const {nombre, ...resto} = req.body;
+
+
+
+    const pizza = await Pizza.findByIdAndUpdate(id,resto, {new:true});
+
         
     res.json({
         msg: "PUT pizzas",
+        pizza
     });
   
   }

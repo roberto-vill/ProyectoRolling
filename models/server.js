@@ -11,6 +11,7 @@ class Server {
     this.app = express()
     this.usuariosPath="/api/usuarios"
     this.pizzasPath="/api/pizzas"
+    this.authPath="/api/auth"
 
     //comnexion
     this.conectarDB();
@@ -41,6 +42,9 @@ class Server {
 
        //Acceso al Body
        this.app.use(express.json());
+       this.app.use(express.urlencoded({extended:true}));
+       
+
 
 
 
@@ -48,6 +52,7 @@ class Server {
     }
 
     routes(){
+        this.app.use(this.authPath, require("../routes/auth"))
         this.app.use(this.usuariosPath, require("../routes/usuarios"))
         this.app.use(this.pizzasPath, require("../routes/pizzas"))
     }
